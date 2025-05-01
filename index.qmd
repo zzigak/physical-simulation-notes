@@ -1,0 +1,3 @@
+# Preface {.unnumbered}
+
+These are my notes on physical simulation. They are a colmulation of my attempt at capturing my reading on physical simulation. As my fiddly mind cannot always find the will to write these notes, they are not exhaustive.

@@ -1,0 +1,33 @@
+project:
+  type: book
+
+book:
+  title: "Physical Simulations in Graphics"
+  author: "Žiga Kovačič"
+  search: true
+  date: "2/18/2025"
+  chapters:
+    - index.qmd
+    # - intro.qmd
+    - classical_mechanics.qmd
+    - rigid_body_dynamics.qmd
+    - deformations.qmd
+    - contact_simulation.qmd
+    - mpm.qmd
+    - mpm_snow.qmd
+    - flip.qmd
+    - APIC.qmd
+    # - summary.qmd
+    # - references.qmd
+  page-footer: "Copyright 2025, Žiga Kovačič" 
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:  custom.scss
+  pdf:
+    documentclass: scrreprt
+
+
+

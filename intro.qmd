@@ -1,0 +1,4 @@
+# Physical Simulation **Notes**
+
+These notes are a colmulation of my attempt at capturing my reading on physical simulation. As my foul mind cannot
+always find the will to write these notes, they are not exhaustive.

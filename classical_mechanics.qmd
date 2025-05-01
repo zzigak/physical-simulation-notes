@@ -1,0 +1,61 @@
+# Classical Mechanics: A brief Detour
+
+
+
+This chapter introduces Newtonian, Lagrangian, and Hamiltonian mechanics—three equivalent frameworks for describing physical systems—and explains their relevance to simulations in graphics.
+
+
+## Newtonian Mechanics
+Newtonian mechanics describes motion using forces and vector quantities. Its foundation is Newton’s second law:
+
+$$ F = \partial_{t}p = m \ddot x$$
+
+where $F$ is the force, $p$ is the momentum, $m$ is the mass, and $x$ is the position. This equation is a second-order ordinary differential equation (ODE) that relates the force acting on an object to its acceleration. To solve these problem formulations we identify all forces acting on each object, break them into components, and then solve the 2nd order ODE in each direction.
+
+While intuitive for simple systems, Newtonian mechanics becomes cumbersome for complex constraints.
+
+
+## Lagrangian Mechanics
+Lagrangian mechanics uses energy (kinetic $T$ and potential $V$) and generalized coordinates (e.g., angles, lengths) to bypass forces. Lagrangian is defined as:
+
+$$ L = T - V.$$
+
+This is a reformulation of classical mechanics that focuses on the energy of the system rather than forces. It is based on the *principle of least action*, which states that the path taken by a system between two states is the one that minimizes the* action *$S$. The action is defined as the integral of the Lagrangian $L$ over time:
+
+$$ S = \int_{t_0}^{t_1} L(q, \dot q, t) dt$$
+
+where $q$ is the generalized coordinate, $\dot q$ is the derivative of $q$ with respect to time, and $t$ is time. The principle of least action implies that the system evolves in such a way that the action is stationary. This leads to the **Euler-Lagrange equations**, which are derived by requiring that the variation of the action $\delta S$ is zero: 
+
+$$\frac{d}{dt}\left(\partial_{\dot q_i} L\right) - \partial_{q_i} L = 0,$$
+
+The first term is the time *derivative of the generalized momentum* and the second term is the *generalized force*. This means that when you want to find a function that minimizes and integral, you can find it by solving Euler-Lagrange equations. This setting works in any coordinate system and is particularly useful for systems with constraints, such as deformable objects. 
+
+**Generalized Equations of Motion.**
+We sometimes also see EL equations in the form of:
+$$\frac{d}{dt}\left(\partial_{\dot q_i} K\right)  - \partial_{q_i} K = - \partial_{q}V.$$
+This form is specific to conservative systems where the forces are derived from a potential energy function. To generalize this to include non-conservative forces, we introduce *D'Alembert's principle,* which states that the virtual work done by the sum of all forces (including the inertial forces) on a system during a virtual displacement is zero. This gives generalized equations of motion for non-conservative systems:
+
+$$\frac{d}{dt}\left(\partial_{\dot q_i} K\right)  - \partial_{q_i} K = -\partial_q{V} + f_i,$$
+
+where $f_i$ is the non-conservative force acting on the system and $Q_i = -\partial_q{V} + f_i$ is the * generalized force.*
+
+
+## Hamiltonian Mechanics
+Hamiltonian mechanics is another reformulation of classical mechanics that uses the *Hamiltonian* $H$, which is the *total energy* of the system expressed in terms of generalized coordinates $q$ and generalized momenta $p$:
+
+$$ H = T + V = \sum_i p_i \dot q_i - L.$$
+
+The equations of motion can then be derived from the Hamiltonian using the **Hamiltonian equations**:
+
+$$\dot q_i = \partial_{p_i} H, \quad \dot p_i = -\partial_{q_i} H.$$
+
+
+
+For more, you can read this nice blog https://rhettallain.com/2018/10/31/classical-mechanics-newtonian-lagrangian-and-hamiltonian/.
+
+
+
+## Ok, but when do we use which?
+- **Newtonian mechanics** is the most intuitive and is used for simple systems with few constraints.
+- **Lagrangian mechanics** is used for systems with complex constraints, such as deformable objects.
+- **Hamiltonian mechanics** is used for systems with conserved quantities, such as energy, and is particularly useful in quantum mechanics.

@@ -1,0 +1,23 @@
+# Moving-Least-Squares MPM
+
+Based on the paper https://github.com/yuanming-hu/taichi_mpm. 
+
+**They introduce 2 main things:
+**
+
+1. MLS Discretization for MPM
+2. Compatible PIC **formulation**
+
+
+In the paper authors combine MPM, APIC and MLS to get a new method called MLS-MPM which is 2x faster than MPM and allows for cutting and other complex effects. Most of the changes from MPM can be summarized in this figure:
+
+# From MPM to MLS-MPM
+
+| **Shape/Test Function**                      | **B-spline**                                                                                   | **MLS Shape function weighted by B-spline**                                                     |
+|---------------------------------------------|------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| **Lumped mass matrix**                      | $m_i^n = \sum_p m_p \omega_{ip}$                                                               | $m_i^n = \sum_p m_p \omega_{ip}$                                                                 |
+| **APIC P2G Momentum Contribution**          | $m_p \mathbf{C}_p^n (\mathbf{x}_i - \mathbf{x}_p)\omega_{ip}$                                  | $m_p \mathbf{C}_p^n (\mathbf{x}_i - \mathbf{x}_p)\omega_{ip}$                                    |
+| **Stress Momentum Contribution**            | $\Delta t V_p^0 \frac{\partial \Psi}{\partial \mathbf{F}}(\mathbf{F}_p^n) \mathbf{F}_p^{nT} \nabla \omega_{ip}$ | $\frac{4}{\Delta x^2} \Delta t V_p^0 \frac{\partial \Psi}{\partial \mathbf{F}}(\mathbf{F}_p^n) \mathbf{F}_p^{nT} (\mathbf{x}_i - \mathbf{x}_p)\omega_{ip}$ |
+| **APIC G2P Affine Velocity Reconstruction** | $\mathbf{C}_p^{n+1} = \frac{4}{\Delta x^2} \sum_i \mathbf{v}_i (\mathbf{x}_i - \mathbf{x}_p)\omega_{ip}$        | $\mathbf{C}_p^{n+1} = \frac{4}{\Delta x^2} \sum_i \mathbf{v}_i (\mathbf{x}_i - \mathbf{x}_p)\omega_{ip}$          |
+| **Velocity Gradient Evaluation**            | $\nabla \mathbf{v}_p^{n+1} = \sum_i \mathbf{v}_i^{n+1} (\nabla \omega_{ip}^n)^T$                | $\nabla \mathbf{v}_p^{n+1} = \mathbf{C}_p^{n+1}$                                                 |
+| **Deformation Gradient Update**            | $\mathbf{F}_p^{n+1} = \left( \mathbf{I} + \Delta t \frac{\partial \mathbf{v}^{n+1}}{\partial \mathbf{x}}(\mathbf{x}_p^n) \right)\mathbf{F}_p^n$ | $\mathbf{F}_p^{n+1} = \left( \mathbf{I} + \Delta t \frac{\partial \mathbf{v}^{n+1}}{\partial \mathbf{x}}(\mathbf{x}_p^n) \right)\mathbf{F}_p^n$ |
